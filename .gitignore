@@ -1,0 +1,7 @@
+.checkstyle
+.jshintrc
+.project
+.sublime-project
+.tern-project
+.settings
+node_modules

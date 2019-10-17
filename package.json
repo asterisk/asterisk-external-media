@@ -1,0 +1,40 @@
+{
+    "name": "asterisk-external-media",
+    "version": "0.1.0",
+    "description": "asterisk-external-media",
+    "homepage": "https://github.com/asterisk/asterisk-external-media#README.md",
+    "main": "./lib/ari-transcriber.js",
+    "bin": {
+        "ari-transcriber": "./bin/ari-transcriber"
+    },
+    "scripts": {
+        "start": "./bin/ari-transcriber",
+        "test": "echo \"Error: no test specified! Configure in package.json\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/asterisk/asterisk-external-media"
+    },
+    "keywords": [
+        "asterisk",
+        "asterisk ari",
+        "asterisk externa -media"
+    ],
+    "author": "George Joseph <gjoseph@digium.com",
+    "license": "Apache-2.0",
+    "readmeFilename": "README.md",
+    "engines": {
+        "node": ">=10"
+    },
+    "dependencies": {
+        "@google-cloud/speech": "^3.3.1",
+        "ari-client": "^2.2.0",
+        "chalk": "^2.4.2",
+        "datagram-stream": "^1.1.1",
+        "ws": "^7.2.0",
+        "yargs": "^14.2.0"
+    },
+    "optionalDependencies": {
+        "bufferutil": "^4.0.1"
+    }
+}
