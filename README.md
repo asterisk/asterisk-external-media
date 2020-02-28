@@ -16,7 +16,7 @@ See https://cloud.google.com/speech-to-text/docs/ for more information.
 
 Run `npm install` from the top of the source tree.
 This will install the required npm packages including `node-ari-client` and `@google-cloud/speech`.
-You can then run the transcriber as `bin/ari-transccriber`.  If you add the `-g`
+You can then run the transcriber as `bin/ari-transcriber`.  If you add the `-g`
 option to `npm install` to install system wide, you can just run `ari-transcriber`. 
 
 ## Usage
