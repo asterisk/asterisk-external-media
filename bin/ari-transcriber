@@ -32,7 +32,14 @@ require(`yargs`)
 		(yargs) => {
 			yargs.example("$0 --help --format=slin16 --sslCert=/etc/letsencrypt/live/myserver/fullchain.pem --sslKey=/etc/letsencrypt/live/myserver/privkey.pem --wssPort=39990 --speakerDiarization 'Local/1170' ")
 			yargs.wrap(yargs.terminalWidth());
-			yargs.positional('dialstring', {describe: 'Extension to dial such as "Local/1234"'});
+			yargs.parserConfiguration({
+				"parse-numbers": false,
+				"parse-positional-numbers": false
+			});
+			yargs.positional('dialstring', {
+				describe: 'Extension to dial such as "Local/1234" (or with -s, what to snoop on eg. "PJSIP/1234-0000abcd" or "1716337601.107")',
+				type: 'string'
+			});
 		},
 		opts => {
 			new transcriber.AriTranscriber(opts);
@@ -140,6 +147,13 @@ require(`yargs`)
 			description: "WebSocket server port.  If omitted, no websocket server will be started",
 			group: "Transcription WebSocket",
 			type: 'number',
+		},
+		snoopTarget: {
+			alias: 's',
+			global: true,
+			requiresArg: false,
+			description: "Use <dialstring> as the unique ID or channel name to snoop on",
+			type: 'boolean',
 		}
 	})
 	.strict().argv;
