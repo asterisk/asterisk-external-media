@@ -11,10 +11,15 @@ the audio from a bridge using the Google Speech APIs.
 * A functional Asterisk 16.6.0+ installation.
 * A conference bridge or phone configured.
 * Node.JS version 10 or greater.
-* Google Speech API credentials set in environment variable GOOGLE_APPLICATION_CREDENTIALS.  
-See https://cloud.google.com/speech-to-text/docs/ for more information.
+* Google Speech API credentials set in environment variable `GOOGLE_APPLICATION_CREDENTIALS`.
+  * See https://cloud.google.com/speech-to-text/docs/ for more information.
+* For Amazon Transcribe: AWS credentials and region set to environment variables
+  * See https://docs.aws.amazon.com/sdkref/latest/guide/environment-variables.html
+    - `AWS_ACCESS_KEY_ID`
+    - `AWS_SECRET_ACCESS_KEY`
+    - `AWS_REGION`
 
-Run `npm install` from the top of the source tree.
+Run `npm install` and `npm audit fix` from the top of the source tree.
 This will install the required npm packages including `node-ari-client` and `@google-cloud/speech`.
 You can then run the transcriber as `bin/ari-transcriber`.  If you add the `-g`
 option to `npm install` to install system wide, you can just run `ari-transcriber`. 
@@ -36,7 +41,8 @@ Incoming Audio Server
 
 Speech
   --speechModel         Google Speech API model                  [string] [choices: "phone_call", "video", "default"] [default: "default"]
-  --speechLang          BCP-47 Language code.  en-US, fr-CA, etc.                  [string] [choices: "en-US", "fr-CA"] [default: "en-US"]
+  --speechProvider      Speech engine provider                                     [string] [choices: "google", "aws"] [default: "google"]
+  --speechLang          BCP-47 Language code.  en-US, fr-CA, etc.  [string] [choices: Language supported by Google/AWS] [default: "en-US"]
   --speakerDiarization  Outputs words associated to speaker index to the console.                               [boolean] [default: false]
 
 ARI
@@ -85,7 +91,21 @@ wouldn't need the Local channel and mixing bridge.
 You don't need the WebSocket transcription server to try this.
 Just a phone to call.
 
-```
+```sh
 $ export GOOGLE_APPLICATION_CREDENTIALS=<path to Google API credentials>
 $ ari-transcriber --format=slin16 'Local/1234'
-````
+```
+
+Amazon Transcibe mode:
+
+```sh
+$ cat > env.sh
+export AWS_ACCESS_KEY_ID=<AWS IAM access key>
+export AWS_SECRET_ACCESS_KEY=<AWS IAM sectet key>
+export AWS_REGION=<AWS region>
+(Type Ctrl+D)
+
+$ source env.sh
+$ ari-transcriber --format=slin16 --speechProvider=aws 'Local/1234'
+```
+
